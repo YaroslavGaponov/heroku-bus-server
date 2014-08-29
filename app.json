@@ -1,0 +1,6 @@
+{
+  "name": "Bus server",
+  "description": "Bus server",
+  "repository": "https://github.com/YaroslavGaponov/heroku-bus-server",
+  "keywords": ["node", "express", "bus"]
+}
