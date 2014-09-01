@@ -66,7 +66,7 @@ var clients = new ClientPool();
 
 
 var app = express();
-app.set('port', (process.env.PORT || 5000))
+app.set('port', (process.argv[2] || 5000))
 app.use(express.bodyParser());
 
 app.get('/:type/:name', function(request, response) {
