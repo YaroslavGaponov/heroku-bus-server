@@ -72,7 +72,7 @@ app.set('port', PORT)
 app.use(express.bodyParser());
 
 app.get('/', function(request, response) {
-    response.send('Heroku Bus server is running at :' + PORT);    
+    response.send('Heroku Bus server is running at :' + app.get('port'));    
 });
 
 app.get('/:type/:name', function(request, response) {
@@ -102,6 +102,6 @@ app.post('/:type/:name', function(request, response) {
 });
 
 
-app.listen(PORT, function() {
-    console.log('Heroku Bus server is running at :' + PORT)
+app.listen(app.get('port'), function() {
+    console.log('Heroku Bus server is running at :' + app.get('port'))
 });
