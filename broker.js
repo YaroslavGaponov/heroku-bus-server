@@ -1,4 +1,6 @@
 var express = require('express');
+var os = require('os');
+var util = require('util');
 
 var PORT = process.env.PORT || 80;
 
@@ -66,29 +68,39 @@ ClientPool.prototype.notifyAll = function(type, name, body) {
 
 var clients = new ClientPool();
 
-
 var app = express();
 app.set('port', PORT)
 app.use(express.bodyParser());
 
 app.get('/', function(request, response) {
-    response.send('Heroku Bus server is running at :' + app.get('port'));    
+    var configure = {
+	app: 'Heroku Bus server',
+	time: Date(),	
+	host: os.hostname(),
+	port: PORT,
+	types: Object.keys(TYPE)
+    };
+    response.contentType('application/json');
+    response.send(configure);    
 });
 
 app.get('/:type/:name', function(request, response) {
-    var type = TYPE[request.params.type];
-    if (!TYPE[type]) {
+    if (!(request.params.type in TYPE)) {
 	return response.send(400);
     }
+    var type = TYPE[request.params.type];
     var name = request.params.name;
     clients.addClient(type, name, response);
 });
 
 app.post('/:type/:name', function(request, response) {
-    var type = TYPE[request.params.type];
-    if (!TYPE[type]) {
+    if (!request.is('application/json')) {
 	return response.send(400);
-    }    
+    }
+    if (!(request.params.type in TYPE)) {
+	return response.send(400);
+    }
+    var type = TYPE[request.params.type];
     var name = request.params.name;
     switch (type) {
 	case TYPE.queue:
@@ -103,5 +115,5 @@ app.post('/:type/:name', function(request, response) {
 
 
 app.listen(app.get('port'), function() {
-    console.log('Heroku Bus server is running at :' + app.get('port'))
+    console.log(util.format('Heroku Bus server is running at : http://%s:%s ...', os.hostname(), PORT))
 });
