@@ -69,6 +69,10 @@ var app = express();
 app.set('port', (process.argv[2] || 5000))
 app.use(express.bodyParser());
 
+app.get('/', function(request, response) {
+    response.send('Heroku Bus server is running...');    
+});
+
 app.get('/:type/:name', function(request, response) {
     var type = TYPE[request.params.type];
     if (!TYPE[type]) {
