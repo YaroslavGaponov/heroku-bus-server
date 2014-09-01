@@ -25,7 +25,7 @@ Subcribe on new message
 curl -XGET  http://stormy-gorge-8934.herokuapp.com/queue/test
 `
 
-Consumer a new message
+Publish a new message
 `
 curl -XPOST  http://stormy-gorge-8934.herokuapp.com/queue/test -d '{ "message": "Hello world!!!" }' -H "Content-Type: application/json"
 `
@@ -40,7 +40,7 @@ Subcribe on new message
 curl -XGET  http://stormy-gorge-8934.herokuapp.com/topic/test
 `
 
-Consumer a new message
+Publish a new message
 `
 curl -XPOST  http://stormy-gorge-8934.herokuapp.com/topic/test -d '{ "message": "Hello world!!!" }' -H "Content-Type: application/json"
 `
