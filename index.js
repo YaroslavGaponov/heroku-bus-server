@@ -66,11 +66,11 @@ var clients = new ClientPool();
 
 
 var app = express();
-app.set('port', (process.argv[2] || 5000))
+app.set('port', (process.env.PORT || 80))
 app.use(express.bodyParser());
 
 app.get('/', function(request, response) {
-    response.send('Heroku Bus server is running...');    
+    response.send('Heroku Bus server is running at :' + app.get('port'));    
 });
 
 app.get('/:type/:name', function(request, response) {
@@ -101,5 +101,5 @@ app.post('/:type/:name', function(request, response) {
 
 
 app.listen(app.get('port'), function() {
-    console.log("Bus server is running at localhost:" + app.get('port'))
+    console.log('Heroku Bus server is running at :' + app.get('port'))
 });
