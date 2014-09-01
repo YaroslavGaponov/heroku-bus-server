@@ -102,6 +102,6 @@ app.post('/:type/:name', function(request, response) {
 });
 
 
-app.listen(app.get('port'), function() {
+app.listen(PORT, function() {
     console.log('Heroku Bus server is running at :' + PORT)
 });
